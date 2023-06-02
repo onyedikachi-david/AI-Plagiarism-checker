@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Evaluation System - Result</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .result-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .result-heading {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .result-data {
+        margin-bottom: 10px;
+      }
+
+      .result-label {
+        font-weight: bold;
+      }
+
+      .result-percentage {
+        font-weight: bold;
+        color: #4caf50;
+      }
+
+      .result-message {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Project Evaluation System - Result</h1>
+    <div class="result-container">
+      <h2 class="result-heading">Plagiarism Check Result</h2>
+      <div class="result-data">
+        <p class="result-label">Plagiarism Confidence:</p>
+        <p class="result-percentage">{{ p }}%</p>
+      </div>
+      <div class="result-data">
+        <p class="result-label">Originality Confidence:</p>
+        <p class="result-percentage">{{ o }}%</p>
+      </div>
+      <div class="result-message">
+        {% if p > 50 %}
+        <p>This project may contain plagiarized content.</p>
+        {% else %}
+        <p>This project is original.</p>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

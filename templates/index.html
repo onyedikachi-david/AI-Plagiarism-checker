@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project Evaluation System</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .form-group input[type="text"],
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .form-group textarea {
+        height: 100px;
+      }
+
+      .form-group button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .form-group button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Project Evaluation System</h1>
+    <div class="form-container">
+      <form
+        id="project-form"
+        method="POST"
+        action="{{ url_for('check_plagiarism') }}"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="student-name">Student Name:</label>
+          <input
+            type="text"
+            id="student-name"
+            placeholder="Enter student name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="project-title">Project Title:</label>
+          <input
+            type="text"
+            id="project-title"
+            placeholder="Enter project title"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="project-description">Project Description:</label>
+          <textarea
+            id="project-description"
+            placeholder="Enter project description"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="project-file">Project File:</label>
+          <input type="file" id="project-file" required />
+        </div>
+        <div class="form-group">
+          <button type="submit">Submit Project</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      // Accessing form and adding event listener for form submission
+      const projectForm = document.getElementById("project-form");
+      projectForm.addEventListener("submit", handleFormSubmit);
+
+      // Function to handle form submission
+      function handleFormSubmit(event) {
+        event.preventDefault(); // Prevent form from submitting and page refreshing
+
+        // Fetching form field values
+        const studentName = document.getElementById("student-name").value;
+        const projectTitle = document.getElementById("project-title").value;
+        //const projectDescription = document.getElementById(
+        //  "project-description"
+        // ).value;
+        const projectFile = document.getElementById("project-file").files[0];
+
+        // Creating a FormData object to store the form data
+        const formData = new FormData();
+        formData.append("student-name", studentName);
+        formData.append("project-title", projectTitle);
+        // formData.append("project-description", projectDescription);
+        formData.append("project-file", projectFile);
+
+        // Sending the form data to the Flask server using Fetch API
+        fetch("/check_plagiarism", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Handling the response from the server (if needed)
+            console.log(data);
+
+            // Resetting the form
+            projectForm.reset();
+          })
+          .catch((error) => {
+            // Handling any errors that occur during the request
+            console.error(error);
+          });
+      }
+    </script>
+  </body>
+</html>

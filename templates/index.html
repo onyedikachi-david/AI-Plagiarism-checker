@@ -124,7 +124,6 @@
         formData.append("project-title", projectTitle);
         // formData.append("project-description", projectDescription);
         formData.append("project-file", projectFile);
-
         // Sending the form data to the Flask server using Fetch API
         fetch("/check_plagiarism", {
           method: "POST",
@@ -137,10 +136,13 @@
 
             // Resetting the form
             projectForm.reset();
+
+            // Redirecting to the /result URL
+            window.location.href = "/result";
           })
           .catch((error) => {
             // Handling any errors that occur during the request
-            console.error(error);
+            console.log(error);
           });
       }
     </script>

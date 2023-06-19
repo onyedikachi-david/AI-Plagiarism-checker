@@ -19,7 +19,7 @@ conn = threading.local()
 
 def get_db():
     if not hasattr(conn, 'db'):
-        conn.db = sqlite3.connect("database.db")
+        conn.db = sqlite3.connect("database.sqlite")
         conn.db.row_factory = sqlite3.Row
     return conn.db
 
